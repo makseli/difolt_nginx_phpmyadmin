@@ -1,0 +1,30 @@
+Listen 443
+<VirtualHost *:443>
+	ServerAdmin tdv@uygulamamiz.org.tr
+	DocumentRoot "c:/inetpub/www/uygulama_xyz/public"
+	ServerName uygulama.url
+	ErrorLog "logs/uygulama.url.err"
+	CustomLog "logs/uygulama.url.clg" common
+	
+	SSLEngine on
+	SSLCACertificateFile C:/inetpub/www/uygulama_xyz/ssl/gs_root.pem
+	SSLCertificateChainFile C:/inetpub/www/uygulama_xyz/ssl/intermediate.pem
+	SSLCertificateFile C:/inetpub/www/uygulama_xyz/ssl/uygulamamiz.cer
+	SSLCertificateKeyFile C:/inetpub/www/uygulama_xyz/ssl/uygulamamiz.key
+		
+	RewriteEngine On
+	RewriteCond %{HTTPS} off
+	RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
+
+<VirtualHost *:80>
+	ServerAdmin tdv@uygulamamiz.org.tr
+	DocumentRoot "c:/inetpub/www/uygulama_xyz/public"
+	ServerName uygulama.url
+	ErrorLog "logs/uygulama.url.err"
+	CustomLog "logs/uygulama.url.clg" common
+	
+	RewriteEngine On
+	RewriteCond %{HTTPS} off
+	RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+</VirtualHost>
